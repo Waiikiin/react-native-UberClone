@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, Button, Pressable } from 'react-native';
 
 import styles from './styles';
 
@@ -10,12 +10,10 @@ const UberEats = (props) => {
             <Text style={styles.text}>
                 Help your neighbors by helping yourself to something tasty
             </Text>
-             <View> 
-                <TouchableWithoutFeedback style={styles.learnMore}>          
-                    <Text > Eat local</Text>
-                </TouchableWithoutFeedback>
-            </View>
 
+            <Pressable style={styles.button}>          
+                <Text style={styles.buttonText}> Eat local</Text>
+            </Pressable>
         </View>
     );
 };
