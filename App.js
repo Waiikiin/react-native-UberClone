@@ -11,10 +11,13 @@ import type {Node} from 'react';
 import { StatusBar } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+import HomeScreen from './src/screens/HomeScreen';
+
 const App: () => Node = () => {
   return (
     <>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+      <StatusBar barStyle={'dark-content'} />
+      <HomeScreen />
     </>
   );
 };
