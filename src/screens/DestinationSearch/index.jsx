@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import { View, TextInput, SafeAreaView } from 'react-native'
+import React, { useState, useEffect } from 'react';
+import { View, TextInput, SafeAreaView } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import styles from './styles'
+import Config from "react-native-config";
+import styles from './styles';
 
 const DestinationSearch = () => {
     const [origin, setOrigin] = useState('');
@@ -34,7 +35,7 @@ const DestinationSearch = () => {
                     setDestination({data, details});
                 }}
                 query={{
-                    key: 'AIzaSyCw2-c4IfIm0iVC2Ac7xclNtYbCUsKKpN4',
+                    key: Config.GOOGLE_MAPS_API_KEY,
                     language: 'en',
                 }}
             />

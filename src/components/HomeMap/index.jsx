@@ -3,6 +3,7 @@ import { Image } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import cars from '../../assets/data/cars';
+import Config from "react-native-config";
 
 const HomeMap = (props) => {
 
@@ -22,7 +23,7 @@ const HomeMap = (props) => {
 
     const origin = {latitude: 28.450627, longitude: -16.263045};
     const destination = {latitude: 28.450127, longitude: -16.269045};
-    const GOOGLE_MAPS_APIKEY = 'AIzaSyCw2-c4IfIm0iVC2Ac7xclNtYbCUsKKpN4';
+    const GOOGLE_MAPS_APIKEY = Config.GOOGLE_MAPS_API_KEY;
 
     return (
         <MapView
