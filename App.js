@@ -21,9 +21,9 @@ const App: () => Node = () => {
   return (
     <>
       <StatusBar barStyle={'dark-content'} />
-      <HomeScreen />
+      {/* <HomeScreen /> */}
       {/*<DestinationSearch /> */}
-      {/* <ResultLocation /> */}
+      <ResultLocation />
       {/* <AvailableUberRow /> */}
     
     </>

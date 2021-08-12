@@ -3,19 +3,19 @@ import { View, Text, Button, Pressable } from 'react-native';
 
 import styles from './styles';
 
-const UberEats = (props) => {
+const Promo = (props) => {
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Explore local cuisines</Text>
+            <Text style={styles.title}>Get out and about</Text>
             <Text style={styles.text}>
-                Help your neighbors by helping yourself to something tasty
+                Stepping out? We'll help get you there and back again.
             </Text>
 
             <Pressable style={styles.button}>          
-                <Text style={styles.buttonText}> Eat local</Text>
+                <Text style={styles.buttonText}>{' '} Ride with Uber {' '}</Text>
             </Pressable>
         </View>
     );
 };
 
-export default UberEats
+export default Promo

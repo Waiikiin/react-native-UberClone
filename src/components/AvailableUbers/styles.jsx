@@ -5,7 +5,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'black',
         padding: 10,
         marginHorizontal: 20,
-        marginVertical: 25,
         alignItems: 'center',
    },
 

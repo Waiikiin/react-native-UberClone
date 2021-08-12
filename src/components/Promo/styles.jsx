@@ -2,8 +2,9 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#53a25a',
+        backgroundColor: '#4682B4',
         padding: 15,
+        flex: 1,
     },
     title: {
         color: 'white',
@@ -21,7 +22,8 @@ const styles = StyleSheet.create({
         fontSize: 10,
         alignItems: "center",
         textAlign: "center",
-        width: 75,
+        alignSelf: 'flex-start',
+        borderRadius: 20,
         padding: 5,
         margin: 5,
     },

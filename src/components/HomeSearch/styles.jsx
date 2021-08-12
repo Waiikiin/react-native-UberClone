@@ -1,6 +1,10 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
+    container: {
+         flex: 1,
+    },
+    
     inputBox: {
         flexDirection: "row",
         backgroundColor: "#DCDCDC",
@@ -45,13 +49,13 @@ const styles = StyleSheet.create({
         borderColor: "#A9A9A9",
     },
     destinationTextBig: {
-        fontSize: 14,
+        fontSize: 15,
         fontWeight: "900",
     },
     destinationTextSmall: {
         fontSize: 12,
         fontWeight: "400",
-
+        color: "#474747",
     }
 })
 
