@@ -6,7 +6,7 @@ import styles from './styles'
 
 const HomeSearch = () => {
     return (
-        <View>
+        <View style={styles.container}>
             {/* Input Box */}
             <View style={styles.inputBox}>
                 <Text style={styles.inputText}> Where To?</Text>

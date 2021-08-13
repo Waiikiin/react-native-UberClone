@@ -1,16 +1,85 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React from 'react';
+import { Image } from 'react-native';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import MapViewDirections from 'react-native-maps-directions';
+import cars from '../../assets/data/cars';
+import Config from "react-native-config";
 
 const HomeMap = (props) => {
+
+    const getImage = (type) => {
+        if (type === 'UberX') {
+            return require('../../assets/images/UberX.png')
+        }
+
+        if (type === 'Comfort') {
+            return require('../../assets/images/Comfort.png')
+        }
+
+        if (type === 'UberXL') {
+            return require('../../assets/images/UberXL.png')
+        }
+    }
+
+    const origin = {latitude: 28.450627, longitude: -16.263045};
+    const destination = {latitude: 28.450127, longitude: -16.269045};
+    const GOOGLE_MAPS_APIKEY = Config.GOOGLE_MAPS_API_KEY;
+
     return (
-        <View style={{
-            height: 300, 
-            backgroundColor: '#a0abff', 
-            justifyContent: 'center',
-            alignItems: 'center',
-            }}>
-            <Text>Home Map</Text>
-        </View>
+        <MapView
+            style={{
+                height: "100%",
+                width: "100%",
+            }}
+            provider={PROVIDER_GOOGLE}
+            showsUserLocation={true}
+            initialRegion={{
+                latitude: 28.450627,
+                longitude: -16.263045,
+                latitudeDelta: 0.0122,
+                longitudeDelta: 0.0121,
+            }}
+        >
+            <MapViewDirections
+                origin={origin}
+                destination={destination}
+                apikey={GOOGLE_MAPS_APIKEY}
+                strokeWidth={3}
+                strokeColor="black"
+            />
+
+            {/* <Marker
+                coordinate={origin}
+                title={"Origin"}
+            />
+
+            <Marker
+                coordinate={destination}
+                title={"Destination"}
+            />
+             */}
+
+            {/* test marker on images } */}
+
+            {cars.map((car) => (
+                <Marker
+                    key={car.id}
+                    coordinate={{ latitude : car.latitude , longitude : car.longitude }}
+                >
+                    <Image 
+                        style={{
+                            width: 60, 
+                            height: 60, 
+                            resizeMode: 'contain',
+                            transform: [{
+                                rotate: `${car.heading}deg`
+                            },]
+                        }}
+                        source={getImage(car.type)} 
+                    />
+                </Marker>
+            ))}
+        </MapView>
     )
 }
 
