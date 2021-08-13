@@ -19,6 +19,10 @@ const AvailableUbers = () => {
                 />
             ))}
 
+            <View style={styles.creditCardContainer}>
+                <Text>Visa 4242 **** **** ****</Text>
+            </View>
+
             <Pressable onPress={confirm()} style={styles.button}>
                 <Text style={styles.confirm}>
                     Confirm Uber

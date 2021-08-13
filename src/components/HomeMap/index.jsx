@@ -32,6 +32,7 @@ const HomeMap = (props) => {
                 width: "100%",
             }}
             provider={PROVIDER_GOOGLE}
+            showsUserLocation={true}
             initialRegion={{
                 latitude: 28.450627,
                 longitude: -16.263045,
@@ -47,7 +48,7 @@ const HomeMap = (props) => {
                 strokeColor="black"
             />
 
-            <Marker
+            {/* <Marker
                 coordinate={origin}
                 title={"Origin"}
             />
@@ -56,20 +57,28 @@ const HomeMap = (props) => {
                 coordinate={destination}
                 title={"Destination"}
             />
-            
+             */}
+
             {/* test marker on images } */}
 
-            {/* {cars.map((car) => (
+            {cars.map((car) => (
                 <Marker
                     key={car.id}
                     coordinate={{ latitude : car.latitude , longitude : car.longitude }}
                 >
                     <Image 
-                        style={{width: 60, height: 60, resizeMode: 'contain'}}
+                        style={{
+                            width: 60, 
+                            height: 60, 
+                            resizeMode: 'contain',
+                            transform: [{
+                                rotate: `${car.heading}deg`
+                            },]
+                        }}
                         source={getImage(car.type)} 
                     />
                 </Marker>
-            ))} */}
+            ))}
         </MapView>
     )
 }
