@@ -6,9 +6,13 @@ import styles from './styles';
 import PlaceRow from './PlaceRow';
 import Ionicons from "react-native-vector-icons/Ionicons";
 
+import { useNavigation } from '@react-navigation/native';
+
 const DestinationSearch = () => {
     const [origin, setOrigin] = useState('');
     const [destination, setDestination] = useState('');
+
+    const navigation = useNavigation();
 
     const homePlace = {
         description: 'Home',
@@ -23,7 +27,10 @@ const DestinationSearch = () => {
     useEffect(() => {
         console.warn('useEffect is deprecated');
         if (origin && destination) {
-            console.warn('redirect to results');
+            navigation.navigate("SearchResults", {
+                origin,
+                destination,
+            });
         }
         
     }, [origin, destination])
@@ -46,14 +53,13 @@ const DestinationSearch = () => {
                     }}
                     placeholder='Current Location'
                     onPress={(data, details = null) => {
-                        setDestination({data, details});
+                        setOrigin({data, details});
                     }}
                     query={{
                         key: Config.GOOGLE_MAPS_API_KEY,
                         language: 'en',
-                        components: 'country:ca',
                     }}
-
+                    fetchDetails={true}
                     currentLocation={true}
                     currentLocationLabel='Current location'
 
@@ -83,9 +89,9 @@ const DestinationSearch = () => {
                     query={{
                         key: Config.GOOGLE_MAPS_API_KEY,
                         language: 'en',
-                        components: 'country:ca',
-                    }}             
+                    }}
 
+                    fetchDetails={true}
                     renderRow={(data) => <PlaceRow data={data} />}
                     enablePoweredByContainer={false}
                 />

@@ -5,7 +5,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 const PlaceRow = ({data}) => {
-    console.log(data)
+
     const splitAddress = (fullAddress) => {
         const place = fullAddress.split(",")[0];
         const address = fullAddress.search(",") > 0 ? fullAddress.substring(fullAddress.search(",") + 2) : "";

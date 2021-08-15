@@ -1,10 +1,10 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React from 'react';
+import { View, Text } from 'react-native';
 
-import HomeMap from '../../components/HomeMap/'
-import Promo from '../../components/Promo'
-import HomeSearch from '../../components/HomeSearch/'
-import styles from './styles'
+import HomeMap from '../../components/HomeMap';
+import Promo from '../../components/Promo';
+import HomeSearch from '../../components/HomeSearch/';
+import styles from './styles';
 
 const HomeScreen = (props) => {
     return (
@@ -14,7 +14,7 @@ const HomeScreen = (props) => {
             </View>
 
             <View style={styles.searchContainer}>
-                <HomeSearch />
+                <HomeSearch onPress={() => navigation.navigate('DestinationSearch')}/>
             </View>
             
             <View style={styles.mapContainer}>
