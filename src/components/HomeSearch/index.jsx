@@ -1,14 +1,24 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Pressable } from 'react-native'
 import AntDesign from "react-native-vector-icons/AntDesign"
 import MaterialIcons from "react-native-vector-icons/MaterialIcons"
 import styles from './styles'
 
+import { useNavigation } from '@react-navigation/native';
+
 const HomeSearch = () => {
+    
+    const navigation = useNavigation();
+
     return (
         <View style={styles.container}>
             {/* Input Box */}
-            <View style={styles.inputBox}>
+            <Pressable 
+                onPress={() => {
+                    navigation.navigate('DestinationSearch');
+                }}
+                style={styles.inputBox}
+            >
                 <Text style={styles.inputText}> Where To?</Text>
 
                 <View style={styles.timeWrapper}>
@@ -18,7 +28,7 @@ const HomeSearch = () => {
                         <MaterialIcons name={'keyboard-arrow-down'} size={15}/>
                     </View>
                 </View>
-            </View>
+            </Pressable>
 
             {/* Previous destination */}
             <View style={styles.row}>

@@ -14,9 +14,9 @@ import Geolocation from '@react-native-community/geolocation';
 
 import HomeScreen from './src/screens/HomeScreen';
 import DestinationSearch from './src/screens/DestinationSearch';
-import ResultLocation from './src/screens/ResultLocation';
 import AvailableUberRow from './src/components/AvailableUberRow';
 import AvailableUbers from './src/components/AvailableUbers';
+import Router from './src/Navigation/Root';
 
 navigator.geolocation = require('@react-native-community/geolocation');
 
@@ -56,11 +56,10 @@ const App: () => Node = () => {
   return (
     <>
       <StatusBar barStyle={'dark-content'} />
-      {/* <HomeScreen /> */}
-      <DestinationSearch />
-      {/* <ResultLocation /> */}
+      <Router />
+      {/* {<DestinationSearch /> */}
       {/* <AvailableUberRow /> */}
-    
+
     </>
   );
 };

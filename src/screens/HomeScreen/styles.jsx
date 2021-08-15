@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     },
 
     promoContainer: {
-        height: 200,
+        height: 220,
     },
 
     searchContainer: {
