@@ -16,25 +16,18 @@ const Stack = createNativeStackNavigator();
 //     },
 //   };
 
-
-const DummyScreen = (props) => (
-    <View>
-        <Text>{props.name}</Text>
-    </View>
-)
-
 const RootNavigator = (props) => {
     const scheme = useColorScheme();
     return (
         <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
             <Stack.Navigator
 
-                initialRouteName={"HomeScreen"}>
+                initialRouteName={"Home"}>
                     <Stack.Screen 
                         options={{
                             headerShown: false,
                         }}
-                        name={"HomeScreen"} component={HomeNavigator} />
+                        name={"Home"} component={HomeNavigator} />
                     <Stack.Screen 
                         options={{
                             headerShown: true,

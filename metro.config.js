@@ -5,6 +5,8 @@
  * @format
  */
 
+const exclusionList  = require('metro-config/src/defaults/exclusionList')
+
 module.exports = {
   transformer: {
     getTransformOptions: async () => ({
@@ -16,5 +18,6 @@ module.exports = {
   },
   resolver: {
     sourceExts: ['js', 'json' ,'jsx', 'ts', 'tsx'],
+    blacklistRE: exclusionList([/amplify\/#current-cloud-backend\/.*/]),
    },
 };

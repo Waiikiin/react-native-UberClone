@@ -1,11 +1,15 @@
 import React from 'react';
-
-
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import CustomDrawer from './CustomDrawer';
 import HomeScreen from '../screens/HomeScreen';
 
 const Drawer = createDrawerNavigator();
+
+const DummyScreen = (props) => (
+    <View>
+        <Text>{props.name}</Text>
+    </View>
+)
 
 const HomeNavigator = () => { 
     return (

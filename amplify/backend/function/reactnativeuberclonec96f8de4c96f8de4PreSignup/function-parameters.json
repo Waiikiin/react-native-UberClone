@@ -1,0 +1,17 @@
+{
+  "trigger": true,
+  "modules": [
+    "custom"
+  ],
+  "parentResource": "reactnativeuberclonec96f8de4c96f8de4",
+  "functionName": "reactnativeuberclonec96f8de4c96f8de4PreSignup",
+  "resourceName": "reactnativeuberclonec96f8de4c96f8de4PreSignup",
+  "parentStack": "auth",
+  "triggerEnvs": [],
+  "triggerDir": "C:\\Users\\mcada\\AppData\\Roaming\\nvm\\v14.17.4\\node_modules\\@aws-amplify\\cli\\node_modules\\amplify-category-auth\\provider-utils\\awscloudformation\\triggers\\PreSignup",
+  "triggerTemplate": "PreSignup.json.ejs",
+  "triggerEventPath": "PreSignup.event.json",
+  "roleName": "reactnativeuberclonec96f8de4c96f8de4PreSignup",
+  "skipEdit": true,
+  "enableCors": false
+}
