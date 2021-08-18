@@ -12,11 +12,14 @@ import { StatusBar,  PermissionsAndroid, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Geolocation from '@react-native-community/geolocation';
 
-import HomeScreen from './src/screens/HomeScreen';
-import DestinationSearch from './src/screens/DestinationSearch';
-import AvailableUberRow from './src/components/AvailableUberRow';
-import AvailableUbers from './src/components/AvailableUbers';
 import Router from './src/Navigation/Root';
+
+import Amplify from 'aws-amplify'
+import config from './src/aws-exports'
+
+import { withAuthenticator } from 'aws-amplify-react-native'
+
+Amplify.configure(config)
 
 navigator.geolocation = require('@react-native-community/geolocation');
 
@@ -57,11 +60,8 @@ const App: () => Node = () => {
     <>
       <StatusBar barStyle={'dark-content'} />
       <Router />
-      {/* {<DestinationSearch /> */}
-      {/* <AvailableUberRow /> */}
-
     </>
   );
 };
 
-export default App;
+export default withAuthenticator(App)

@@ -1,12 +1,12 @@
 import React from 'react'
-import { View, Text, Image } from 'react-native'
+import { View, Text, Image, Pressable } from 'react-native'
 import styles from './styles'
 
 import Ionicon from "react-native-vector-icons/Ionicons"
 import Feather from "react-native-vector-icons/Feather"
 
 const AvailableUberRow = (props) => {
-    const {type} = props;
+    const {type, onPress, isSelected} = props;
 
     const getImage = () => {
         if (type.type === 'UberX') {
@@ -22,7 +22,12 @@ const AvailableUberRow = (props) => {
         }
     }
     return (
-        <View style={styles.container}>
+        <Pressable 
+            onPress={onPress}
+            style={[styles.container, {
+                backgroundColor: isSelected ? '#efefef' : 'white',
+            }
+            ]}>
             <Image 
                 style={styles.image} 
                 source={getImage()}
@@ -50,7 +55,7 @@ const AvailableUberRow = (props) => {
                     $27
                 </Text>
             </View>
-        </View>
+        </Pressable>
     )
 }
 
