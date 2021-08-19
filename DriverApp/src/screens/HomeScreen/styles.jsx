@@ -3,7 +3,7 @@ import { StyleSheet, Dimensions } from "react-native";
 const styles = StyleSheet.create({
     map: {
         width: '100%', 
-        height: Dimensions.get('window').height - 120,
+        height: Dimensions.get('window').height - 110,
     },
 
     mapButton: {
@@ -61,8 +61,26 @@ const styles = StyleSheet.create({
         padding: 15,
     },
     bottomText: {
-        fontSize: 22,
+        fontSize: 20,
         color: '#4a4a4a',
+    },
+
+    bottomTextWithOrderContainer: {
+        alignItems: "center",
+    },
+    bottomTextWithOrderWrapper: {
+        flexDirection: "row",
+        alignItems: "center",
+        margin: 5,
+    },
+    userBackground: {
+        backgroundColor: '#48d42a',
+        borderRadius: 100,
+        width: 25,
+        height: 25,
+        alignItems: "center",
+        justifyContent: "center",
+        marginHorizontal: 15,
     },
 })
 
