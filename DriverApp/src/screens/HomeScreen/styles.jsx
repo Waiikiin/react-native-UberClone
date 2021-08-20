@@ -1,9 +1,13 @@
 import { StyleSheet, Dimensions } from "react-native";
 
 const styles = StyleSheet.create({
+    root: {
+        flex: 1,
+    },
+    
     map: {
         width: '100%', 
-        height: Dimensions.get('window').height - 110,
+        height: Dimensions.get('window').height - 120,
     },
 
     mapButton: {
@@ -19,8 +23,8 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         alignItems: "center",
         justifyContent: "center",
-        width: 100,
-        height: 50,
+        width: 110,
+        height: 45,
         top: 13,
         left: Dimensions.get('window').width/2 - 43,
     },
@@ -39,7 +43,7 @@ const styles = StyleSheet.create({
         borderColor: 'white',
         padding: 10,
         borderRadius: 100,
-        bottom: 130, 
+        bottom: 150, 
         alignItems: "center",
         justifyContent: "center",
         left: Dimensions.get('window').width/2 - 33,
@@ -65,13 +69,17 @@ const styles = StyleSheet.create({
         color: '#4a4a4a',
     },
 
-    bottomTextWithOrderContainer: {
+    estimationInfoBarContainer: {
         alignItems: "center",
     },
-    bottomTextWithOrderWrapper: {
+    estimationInfoBar: {
         flexDirection: "row",
         alignItems: "center",
         margin: 5,
+    },
+    estimationText: {
+        fontSize: 16,
+        fontWeight: "bold",
     },
     userBackground: {
         backgroundColor: '#48d42a',
@@ -82,6 +90,33 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         marginHorizontal: 15,
     },
+
+    customerInfoContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        paddingHorizontal: 20,
+        paddingVertical: 20,
+        borderTopWidth: 1,
+        borderTopColor: "#CCCCCC",
+    },
+
+    completeButton: {
+        flexDirection: "row",
+        backgroundColor: 'red',
+        padding: 15,
+        marginHorizontal: 20,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    completeText: {
+        color: 'white',
+        fontWeight: "bold",
+    },
+    completeArrow: {
+        position: "absolute",   
+        left: 20,
+    }
 })
 
 export default styles;

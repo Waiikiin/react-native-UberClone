@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
         height: 250,
         alignItems: 'center',
         justifyContent: "space-around",
-        
     },
 
     buttonsContainer: {
@@ -42,6 +41,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 
+    estimationWrapper: {
+        justifyContent: "center",
+        alignItems: "center",
+    },
+
     uberType: {
         color: 'lightgrey',
         fontSize: 18,
@@ -66,7 +70,11 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 20,
     },
-
+    lastContainer: {
+        borderTopWidth: 1,
+        borderTopColor: '#E6E6E6',
+        padding: 10,
+    }
 })
 
 

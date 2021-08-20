@@ -33,7 +33,7 @@ const OrderPopup = ({newOrder, duration, distance, onDecline, onAccept}) => {
 
                 </View>
                 
-                <View>
+                <View style={styles.estimationWrapper}>
                     <Text style={styles.estMin}>{duration} min</Text>
                     <Text style={styles.estDist}>{distance} mi</Text>
                 </View>
