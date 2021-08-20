@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Dimensions, Pressable } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
@@ -14,11 +14,17 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import OrderPopup from '../../components/OrderPopup';
 import styles from './styles';
 
+import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify';
+
+import { getCar } from '../../graphql/queries';
+import { createCar, updateCar } from '../../graphql/mutations';
+
 const origin = {latitude: 49.8004, longitude: -97.1676};
 const destination = {latitude: 49.7999, longitude: -97.1676};
 
+
 const HomeScreen = () => {
-    const [isOnline, setIsOnline] = useState(true);
+    const [car, setCar] = useState(null);
     const [driverPosition, setDriverPosition] = useState(null);
     const [order, setOrder] = useState(null);
     const buttonBottomPos = 150;
@@ -39,8 +45,44 @@ const HomeScreen = () => {
         }
     });
 
-    const onGoPress = () => {
-        setIsOnline(!isOnline);
+    const fetchCar = async () => {
+        try {
+            const authenticatedUser = await Auth.currentAuthenticatedUser();
+            
+            const getCarData = await API.graphql(
+                graphqlOperation(getCar, {
+                    id: authenticatedUser.attributes.sub,
+                })
+            )
+            setCar(getCarData.data.getCar);
+            console.log(car);
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    useEffect(() => {
+        fetchCar();
+    }, [])
+
+    const onGoPress = async () => {
+        try {
+            const authenticatedUser = await Auth.currentAuthenticatedUser();
+            const input = {
+                id: authenticatedUser.attributes.sub,
+                isActive: !car.isActive,
+            }
+            console.log(car.isActive);
+            const updatedCarData = await API.graphql(
+                graphqlOperation(updateCar, {
+                    input: input,
+                })
+            )
+            console.log(updatedCarData);
+            setCar(updatedCarData.data.updateCar);
+        } catch (e) {
+            console.error(e);
+        }
     }
 
     const onDecline = () => {
@@ -126,7 +168,7 @@ const HomeScreen = () => {
             )
         }
 
-        if (isOnline) {
+        if (car?.isActive) {
             return ( <Text style={styles.bottomText} > You're Online</Text> )
         } else {
             return ( <Text style={styles.bottomText} > You're Offline</Text> )
@@ -134,7 +176,7 @@ const HomeScreen = () => {
     }
 
     const renderGo = () => {
-        if (isOnline) {
+        if (car?.isActive) {
             return ( <Text style={styles.goText}>GO</Text> )
         } else {
             return (  <Text style={styles.goText}></Text> )

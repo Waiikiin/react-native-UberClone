@@ -9,22 +9,8 @@
       "UnauthRoleName": "amplify-reactnativeuberclone-dev-00358-unauthRole",
       "StackName": "amplify-reactnativeuberclone-dev-00358",
       "StackId": "arn:aws:cloudformation:us-east-1:632465742475:stack/amplify-reactnativeuberclone-dev-00358/9195be60-ff18-11eb-88ca-1226a942184b",
-      "AmplifyAppId": "d19b16om3ssq6x"
-    },
-    "categories": {
-      "function": {
-        "reactnativeuberclonec96f8de4c96f8de4PostConfirmation": {
-          "deploymentBucketName": "amplify-reactnativeuberclone-dev-00358-deployment",
-          "s3Key": "amplify-builds/reactnativeuberclonec96f8de4c96f8de4PostConfirmation-7a5239686c78784e6439-build.zip"
-        },
-        "reactnativeuberclonec96f8de4c96f8de4PreSignup": {
-          "deploymentBucketName": "amplify-reactnativeuberclone-dev-00358-deployment",
-          "s3Key": "amplify-builds/reactnativeuberclonec96f8de4c96f8de4PreSignup-763759334d394151415a-build.zip"
-        }
-      },
-      "auth": {
-        "reactnativeuberclonec96f8de4c96f8de4": {}
-      }
+      "AmplifyAppId": "d19b16om3ssq6x",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-reactnativeuberclone-dev-00358-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
     }
   }
 }
