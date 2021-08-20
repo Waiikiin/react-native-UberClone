@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Image } from 'react-native';
+import { Image, View } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import cars from '../../assets/data/cars';
 import Config from "react-native-config";
@@ -71,39 +71,41 @@ const HomeMap = ({ origin, destination }) => {
     };
 
     return (
-        <MapView
-            style={{
-                height: "100%",
-                width: "100%",
-            }}
-            provider={PROVIDER_GOOGLE}
-            showsUserLocation={true}
-            initialRegion={{
-                latitude: dummyLocation.latitude,
-                longitude: dummyLocation.longitude,
-                latitudeDelta: _latitudeDelta,
-                longitudeDelta: _longitudeDelta,
-            }}
-        >
-            {cars.map((car) => (
-                <Marker
-                    key={car.id}
-                    coordinate={{ latitude : car.latitude , longitude : car.longitude }}
-                >
-                    <Image 
-                        style={{
-                            width: 60, 
-                            height: 60, 
-                            resizeMode: 'contain',
-                            transform: [{
-                                rotate: `${car.heading}deg`
-                            },]
-                        }}
-                        source={getImage(car.type)} 
-                    />
-                </Marker>
-            ))}
-        </MapView>
+        <View>
+            <MapView
+                style={{
+                    height: "100%",
+                    width: "100%",
+                }}
+                provider={PROVIDER_GOOGLE}
+                showsUserLocation={true}
+                initialRegion={{
+                    latitude: dummyLocation.latitude,
+                    longitude: dummyLocation.longitude,
+                    latitudeDelta: _latitudeDelta,
+                    longitudeDelta: _longitudeDelta,
+                }}
+            >
+                {cars.map((car) => (
+                    <Marker
+                        key={car.id}
+                        coordinate={{ latitude : car.latitude , longitude : car.longitude }}
+                    >
+                        <Image 
+                            style={{
+                                width: 60, 
+                                height: 60, 
+                                resizeMode: 'contain',
+                                transform: [{
+                                    rotate: `${car.heading}deg`
+                                },]
+                            }}
+                            source={getImage(car.type)} 
+                        />
+                    </Marker>
+                ))}
+            </MapView>
+        </View>
     )
 }
 
