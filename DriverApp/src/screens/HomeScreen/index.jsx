@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Dimensions, Pressable } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
@@ -14,135 +14,154 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import OrderPopup from '../../components/OrderPopup';
 import styles from './styles';
 
+import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify';
+
+import { getCar, listOrders } from '../../graphql/queries';
+import { createCar, updateCar } from '../../graphql/mutations';
+
 const origin = {latitude: 49.8004, longitude: -97.1676};
 const destination = {latitude: 49.7999, longitude: -97.1676};
 
+const origin2 = {latitude: 49.8001, longitude: -97.1671};
+const destination2 = {latitude: 49.7989, longitude: -97.1676};
+
+
 const HomeScreen = () => {
-    const [isOnline, setIsOnline] = useState(true);
-    const [driverPosition, setDriverPosition] = useState(null);
+    const [car, setCar] = useState(null);
     const [order, setOrder] = useState(null);
+    const [newOrders, setNewOrders] = useState([]);
+
     const buttonBottomPos = 150;
+    // const [newOrders, setNewOrders] = useState([{
+    //     id: '1',
 
-    const [newOrder, setNewOrder] = useState({
-        id: '1',
+    //     type: 'UberX',
+    //     originLatitude: origin.latitude,
+    //     originLongitude: origin.longitude,
 
-        type: 'UberX',
-        originLatitude: origin.latitude,
-        originLongitude: origin.longitude,
+    //     destLatitude: destination.latitude,
+    //     destLongitude: destination.longitude,
 
-        destLatitude: destination.latitude,
-        destLongitude: destination.longitude,
+    //     user: {
+    //         rating: 5.00,
+    //         name: 'John',
+    //     }
+    // },
+    // {
+    //     id: '2',
 
-        user: {
-            rating: 5.00,
-            name: 'John',
+    //     type: 'Comfort',
+    //     originLatitude: origin2.latitude,
+    //     originLongitude: origin2.longitude,
+
+    //     destLatitude: destination2.latitude,
+    //     destLongitude: destination2.longitude,
+
+    //     user: {
+    //         rating: 4.00,
+    //         name: 'Mary',
+    //     }
+    // }]);
+
+    const fetchCar = async () => {
+        try {
+            const authenticatedUser = await Auth.currentAuthenticatedUser();
+            
+            const getCarData = await API.graphql(
+                graphqlOperation(getCar, {
+                    id: authenticatedUser.attributes.sub,
+                })
+            )
+            setCar(getCarData.data.getCar);
+        } catch (e) {
+            console.error(e);
         }
-    });
+    }
 
-    const onGoPress = () => {
-        setIsOnline(!isOnline);
+    const fetchOrders = async () => {
+        try { 
+            const listOrdersData = await API.graphql(
+                graphqlOperation(listOrders, 
+                    
+                    // {filter: { status: {eq: 'NEW }}}    
+                )
+            )
+            console.log(listOrdersData);
+            setNewOrders(listOrdersData.data.listOrders.items);
+            
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    useEffect(() => {
+        console.log("useEffect");
+        fetchCar();
+        fetchOrders();
+    }, [])
+
+    const onGoPress = async () => {
+        try {
+            const authenticatedUser = await Auth.currentAuthenticatedUser();
+            const input = {
+                id: authenticatedUser.attributes.sub,
+                isActive: !car.isActive,
+            }
+            console.log(car.isActive);
+            const updatedCarData = await API.graphql(
+                graphqlOperation(updateCar, {
+                    input: input,
+                })
+            )
+            console.log(updatedCarData);
+            setCar(updatedCarData.data.updateCar);
+        } catch (e) {
+            console.error(e);
+        }
     }
 
     const onDecline = () => {
-        setNewOrder(null);
+        // new order is at position 1
+        setNewOrders(newOrders.shift());
     }
 
     const onAccept =() => {
-        setOrder(newOrder);
-        setNewOrder(null);
+        // new order is at position 1
+        setOrder(newOrders[0]);
+        setNewOrders(newOrders.shift());
     }
 
-    const renderBottom = () => {
-        if (order && order.isFinished) {
-            return(
-                <View>
-                    <View style={[styles.bottomContainer, {height: 50}]}>
-                        <Ionicons name={"options-outline"} size={20} color="#4a4a4a"/>
-                        <View style={styles.estimationInfoBarContainer}>
-                            <View style={styles.estimationInfoBar}>
-                                <Text style={styles.estimationText}>{ order.duration ? order.duration.toFixed(0) : 'calculating...'} min</Text>
-                                <View style={[styles.userBackground, {backgroundColor:'#FF3232', height: 20, width: 20}]}>
-                                    <FontAwesome name={"user"} size={14} color="white"/>
-                                </View>
-                                <Text style={styles.estimationText}>{order.distance ? order.distance.toFixed(1) : 'calculating...'} km </Text>
-                            </View>
-                        </View>
-                        <MaterialIcons name={"format-list-bulleted"} size={20} color="#4a4a4a"/>
-                    </View>
-
-                    <View style={styles.customerInfoContainer}>
-                            <MaterialCommunityIcons name={"phone-message"} size={28} color="black"/>
-                            <Text style={[styles.bottomText, {fontWeight: 'bold'}]}>{order.user.name}</Text>
-                            <FontAwesome name={"user"} size={28} color="black"/>
-                    </View>
-                    <Pressable style={styles.completeButton}>
-                        <View style={styles.completeArrow}>
-                            <MaterialIcons name={"double-arrow"} size={20} color="white"/>
-                        </View>
-                
-                        <Text style={styles.completeText}>
-                            COMPLETE {order.type.toUpperCase()}
-                        </Text>
-                    </Pressable>
-                </View>
-            )
-        }
-
-        if (order && order.pickedUp) {
-            return( 
-                <View style={styles.bottomContainer}>
-                    <Ionicons name={"options-outline"} size={24} color="#4a4a4a"/>
-                    <View style={styles.estimationInfoBarContainer}>
-                        <View style={styles.estimationInfoBar}>
-                            <Text style={styles.estimationText}>{ order.duration ? order.duration.toFixed(0) : 'calculating...'} min</Text>
-                            <View style={styles.userBackground}>
-                                <FontAwesome name={"user"} size={20} color="white"/>
-                            </View>
-                            <Text style={styles.estimationText}>{order.distance ? order.distance.toFixed(1) : 'calculating...'} km </Text>
-                        </View>
-                        <Text style={styles.bottomText}> Dropping off {order.user.name}</Text>
-                    </View>
-                    <MaterialIcons name={"format-list-bulleted"} size={24} color="#4a4a4a"/>
-                </View>
-            )
-        } 
-        
-        if (order) {
-            return( 
-                <View style={styles.bottomContainer}>
-                    <Ionicons name={"options-outline"} size={24} color="#4a4a4a"/>
-                    <View style={styles.estimationInfoBarContainer}>
-                        <View style={styles.estimationInfoBar}>
-                            <Text style={styles.estimationText}>{ order.duration ? order.duration.toFixed(0) : 'calculating...'} min</Text>
-                            <View style={[styles.userBackground, {backgroundColor:'#FF3232'}]}>
-                                <FontAwesome name={"user"} size={20} color="white"/>
-                            </View>
-                            <Text style={styles.estimationText}>{order.distance ? order.distance.toFixed(1) : 'calculating...'} km </Text>
-                        </View>
-                        <Text style={styles.bottomText}> Picking up {order.user.name}</Text>
-                    </View>
-                    <MaterialIcons name={"format-list-bulleted"} size={24} color="#4a4a4a"/>
-                </View>
-            )
-        }
-
-        if (isOnline) {
-            return ( <Text style={styles.bottomText} > You're Online</Text> )
-        } else {
-            return ( <Text style={styles.bottomText} > You're Offline</Text> )
-        }
-    }
 
     const renderGo = () => {
-        if (isOnline) {
+        if (car?.isActive) {
             return ( <Text style={styles.goText}>GO</Text> )
         } else {
-            return (  <Text style={styles.goText}></Text> )
+            return (  <Text style={styles.goText}>OFF</Text> )
         }
     }
 
-    const onUserLocationChange = (event) => {
-        setDriverPosition(event.nativeEvent.coordinate);
+    const onUserLocationChange = async (event) => {
+        // update the driver's car location and set it to active
+        try {
+            event.persist();
+            const authenticatedUser = await Auth.currentAuthenticatedUser();
+            const { latitude, longitude, heading } = event.nativeEvent.coordinate;
+            const input = {
+                id: authenticatedUser.attributes.sub,
+                latitude: latitude,
+                longitude: longitude,
+                heading: heading, 
+            }
+            
+            const updatedCarData = await API.graphql(
+                graphqlOperation(updateCar, {
+                    input: input,
+                })
+            )
+            setCar(updatedCarData.data.updateCar);
+        } catch (e) {
+            console.error(e);
+        }
     }
 
     const onRoutingFinished = (event) => {
@@ -173,6 +192,99 @@ const HomeScreen = () => {
         };
     }
 
+    const renderBottom = () => {
+        if (order && order.isFinished) {
+            return(
+                <View>
+                    <View style={[styles.bottomContainer, {height: 50}]}>
+                        <Ionicons name={"options-outline"} size={20} color="#4a4a4a"/>
+                        <View style={styles.estimationInfoBarContainer}>
+                            <View style={styles.estimationInfoBar}>
+                                <Text style={styles.estimationText}>{ order.duration ? order.duration.toFixed(0) : 'calculating...'} min</Text>
+                                <View style={[styles.userBackground, {backgroundColor:'#FF3232', height: 20, width: 20}]}>
+                                    <FontAwesome name={"user"} size={14} color="white"/>
+                                </View>
+                                <Text style={styles.estimationText}>{order.distance ? order.distance.toFixed(1) : 'calculating...'} km </Text>
+                            </View>
+                        </View>
+                        <MaterialIcons name={"format-list-bulleted"} size={20} color="#4a4a4a"/>
+                    </View>
+
+                    <View style={styles.customerInfoContainer}>
+                            <MaterialCommunityIcons name={"phone-message"} size={28} color="black"/>
+                            <Text style={[styles.bottomText, {fontWeight: 'bold'}]}>{order.user.username}</Text>
+                            <FontAwesome name={"user"} size={28} color="black"/>
+                    </View>
+                    <Pressable style={styles.completeButton}>
+                        <View style={styles.completeArrow}>
+                            <MaterialIcons name={"double-arrow"} size={20} color="white"/>
+                        </View>
+                
+                        <Text style={styles.completeText}>
+                            COMPLETE {order.type.toUpperCase()}
+                        </Text>
+                    </Pressable>
+                </View>
+            )
+        }
+
+        if (order && order.pickedUp) {
+            return( 
+                <View style={styles.bottomContainer}>
+                    <Ionicons name={"options-outline"} size={24} color="#4a4a4a"/>
+                    <View style={styles.estimationInfoBarContainer}>
+                        <View style={styles.estimationInfoBar}>
+                            <Text style={styles.estimationText}>{ order.duration ? order.duration.toFixed(0) : 'calculating...'} min</Text>
+                            <View style={styles.userBackground}>
+                                <FontAwesome name={"user"} size={20} color="white"/>
+                            </View>
+                            <Text style={styles.estimationText}>{order.distance ? order.distance.toFixed(1) : 'calculating...'} km </Text>
+                        </View>
+                        <Text style={styles.bottomText}> Dropping off {order.user.username}</Text>
+                    </View>
+                    <MaterialIcons name={"format-list-bulleted"} size={24} color="#4a4a4a"/>
+                </View>
+            )
+        } 
+        
+        if (order) {
+            return( 
+                <View style={styles.bottomContainer}>
+                    <Ionicons name={"options-outline"} size={24} color="#4a4a4a"/>
+                    <View style={styles.estimationInfoBarContainer}>
+                        <View style={styles.estimationInfoBar}>
+                            <Text style={styles.estimationText}>{ order.duration ? order.duration.toFixed(0) : 'calculating...'} min</Text>
+                            <View style={[styles.userBackground, {backgroundColor:'#FF3232'}]}>
+                                <FontAwesome name={"user"} size={20} color="white"/>
+                            </View>
+                            <Text style={styles.estimationText}>{order.distance ? order.distance.toFixed(1) : 'calculating...'} km </Text>
+                        </View>
+                        <Text style={styles.bottomText}> Picking up {order.user.username}</Text>
+                    </View>
+                    <MaterialIcons name={"format-list-bulleted"} size={24} color="#4a4a4a"/>
+                </View>
+            )
+        }
+
+        if (car?.isActive) {
+            return ( 
+                <View style={styles.bottomContainer}>
+                    <Ionicons name={"options-outline"} size={24} color="#4a4a4a"/>
+                    <Text style={styles.bottomText} > You're Online</Text> 
+                    <MaterialIcons name={"format-list-bulleted"} size={24} color="#4a4a4a"/>
+                </View>
+            )
+        } else {
+            return ( 
+                <View style={styles.bottomContainer}>
+                    <Ionicons name={"options-outline"} size={24} color="#4a4a4a"/>
+                    <Text style={styles.bottomText} > You're Offline</Text> 
+                    <MaterialIcons name={"format-list-bulleted"} size={24} color="#4a4a4a"/>
+                </View>
+            )
+        }
+    }
+
     return (
         <View style={styles.root}> 
              <MapView
@@ -192,7 +304,10 @@ const HomeScreen = () => {
                 userLocationUpdateInterval={15000}
             >
                 {order && <MapViewDirections
-                        origin={driverPosition}
+                        origin={{
+                            latitude: car?.latitude,
+                            longitude: car?.longitude,
+                        }}
                         onReady={onRoutingFinished}
                         destination={getDestination()}
                         strokeWidth={3}
@@ -240,13 +355,13 @@ const HomeScreen = () => {
                 {renderBottom()}
                 
 
-            { newOrder && 
+            { newOrders && newOrders.length > 0 && !order &&
                 <OrderPopup 
-                    newOrder={newOrder}
+                    newOrder={newOrders[0]}
                     onDecline={onDecline}
                     duration={6}
                     distance={0.5}
-                    onAccept={() => onAccept(newOrder)}
+                    onAccept={() => onAccept(newOrders[0])}
                 />
             }
         </View>

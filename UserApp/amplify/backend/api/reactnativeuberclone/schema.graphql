@@ -3,6 +3,7 @@ type User @model {
   username: String!
   email: String!
 
+  car: Car @connection(fields: ["id"])
   orders: [Order] @connection(keyName: "byUser", fields: ["id"])
 }
 
@@ -12,7 +13,10 @@ type Car @model {
   latitude: Float
   longitude: Float
   heading: Float
+  isActive: Boolean
 
+  userId: ID!
+  user: User @connection(fields: ["userId"])
   orders: [Order] @connection(keyName: "byCar", fields: ["id"])
 }
 
@@ -21,12 +25,14 @@ type Order
   @key(name: "byUser", fields: ["userId"])
   @key(name: "byCar", fields: ["carId", "createdAt"]) {
   id: ID!
+  status: String
+  createdAt: String!
 
   userId: ID!
   user: User @connection(fields: ["userId"])
 
   carId: ID!
-  createdAt: ID!
+
   car: Car @connection(fields: ["carId"])
   type: String!
 

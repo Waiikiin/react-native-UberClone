@@ -47,8 +47,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         left: Dimensions.get('window').width/2 - 33,
-        width: 75,
-        height: 75,
+        width: 80,
+        height: 80,
     },
     goText: {
         fontSize: 30,
