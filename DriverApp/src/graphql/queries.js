@@ -58,3 +58,47 @@ export const getCarId = /* GraphQL */ `
     }
   }
 `;
+
+export const listOrders = /* GraphQL */ `
+  query ListOrders(
+    $filter: ModelOrderFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listOrders(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        status
+        userId
+        user {
+          id
+          username
+          email
+          createdAt
+          updatedAt
+        }
+        carId
+        createdAt
+        car {
+          id
+          type
+          latitude
+          longitude
+          heading
+          isActive
+          userId
+          createdAt
+          updatedAt
+        }
+        type
+        originLatitude
+        originLongitude
+        destLatitude
+        destLongitude
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+

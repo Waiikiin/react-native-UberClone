@@ -21,14 +21,14 @@ const OrderPopup = ({newOrder, duration, distance, onDecline, onAccept}) => {
             
             <View style={styles.popupContainer}>
                 <View style={styles.userInfoRow}>
-                    <Text style={styles.uberType}>{newOrder.type}</Text>
+                    <Text style={styles.uberType}>{newOrder?.type}</Text>
                     <View style={styles.userBackground}>
                         <FontAwesome name={"user"} size={30} color="white"/>
                     </View>
                     <Text style={styles.uberType}> 
                         <AntDesign name={"star"} size={15}/>  
                         {' '}
-                        {parseFloat(newOrder.user.rating).toFixed(2)} 
+                        {parseFloat(newOrder?.user?.rating).toFixed(2)} 
                     </Text>
 
                 </View>

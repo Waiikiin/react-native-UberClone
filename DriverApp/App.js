@@ -60,7 +60,7 @@ const App: () => Node = () => {
     const updateUserCar = async () => {
       // Get authenticated user
       const authenticatedUser = await Auth.currentAuthenticatedUser({bypassCache: true});
-      console.log(authenticatedUser);
+
       if (!authenticatedUser) {
         console.log("User does not exist or user is not authenticated yet")
         return;
@@ -71,7 +71,7 @@ const App: () => Node = () => {
           id: authenticatedUser.attributes.sub,
         })
       )
-      console.log(getCarData);
+
       
       // If not, create a new car for the user
       if (getCarData.data.getCar) {
@@ -91,7 +91,6 @@ const App: () => Node = () => {
         })
       )
       console.log("Created Car");
-      console.log(createCarData)
       return;
     }
     
