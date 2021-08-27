@@ -1,12 +1,36 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateUser = /* GraphQL */ `
-  subscription OnCreateUser {
-    onCreateUser {
+export const onOrderUpdated = /* GraphQL */ `
+  subscription OnOrderUpdated($id: ID!) {
+    onOrderUpdated(id: $id) {
       id
-      username
-      email
+      status
+      createdAt
+      userId
+      user {
+        id
+        username
+        email
+        rating
+        car {
+          id
+          type
+          latitude
+          longitude
+          heading
+          isActive
+          userId
+          createdAt
+          updatedAt
+        }
+        orders {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      carId
       car {
         id
         type
@@ -19,6 +43,48 @@ export const onCreateUser = /* GraphQL */ `
           id
           username
           email
+          rating
+          createdAt
+          updatedAt
+        }
+        orders {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      type
+      originLatitude
+      originLongitude
+      destLatitude
+      destLongitude
+      updatedAt
+    }
+  }
+`;
+export const onCarUpdated = /* GraphQL */ `
+  subscription OnCarUpdated($id: ID!) {
+    onCarUpdated(id: $id) {
+      id
+      type
+      latitude
+      longitude
+      heading
+      isActive
+      userId
+      user {
+        id
+        username
+        email
+        rating
+        car {
+          id
+          type
+          latitude
+          longitude
+          heading
+          isActive
+          userId
           createdAt
           updatedAt
         }
@@ -32,9 +98,59 @@ export const onCreateUser = /* GraphQL */ `
         items {
           id
           status
+          createdAt
           userId
           carId
+          type
+          originLatitude
+          originLongitude
+          destLatitude
+          destLongitude
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateUser = /* GraphQL */ `
+  subscription OnCreateUser {
+    onCreateUser {
+      id
+      username
+      email
+      rating
+      car {
+        id
+        type
+        latitude
+        longitude
+        heading
+        isActive
+        userId
+        user {
+          id
+          username
+          email
+          rating
           createdAt
+          updatedAt
+        }
+        orders {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      orders {
+        items {
+          id
+          status
+          createdAt
+          userId
+          carId
           type
           originLatitude
           originLongitude
@@ -55,6 +171,7 @@ export const onUpdateUser = /* GraphQL */ `
       id
       username
       email
+      rating
       car {
         id
         type
@@ -67,6 +184,7 @@ export const onUpdateUser = /* GraphQL */ `
           id
           username
           email
+          rating
           createdAt
           updatedAt
         }
@@ -80,9 +198,9 @@ export const onUpdateUser = /* GraphQL */ `
         items {
           id
           status
+          createdAt
           userId
           carId
-          createdAt
           type
           originLatitude
           originLongitude
@@ -103,6 +221,7 @@ export const onDeleteUser = /* GraphQL */ `
       id
       username
       email
+      rating
       car {
         id
         type
@@ -115,6 +234,7 @@ export const onDeleteUser = /* GraphQL */ `
           id
           username
           email
+          rating
           createdAt
           updatedAt
         }
@@ -128,9 +248,9 @@ export const onDeleteUser = /* GraphQL */ `
         items {
           id
           status
+          createdAt
           userId
           carId
-          createdAt
           type
           originLatitude
           originLongitude
@@ -159,6 +279,7 @@ export const onCreateCar = /* GraphQL */ `
         id
         username
         email
+        rating
         car {
           id
           type
@@ -180,9 +301,9 @@ export const onCreateCar = /* GraphQL */ `
         items {
           id
           status
+          createdAt
           userId
           carId
-          createdAt
           type
           originLatitude
           originLongitude
@@ -211,6 +332,7 @@ export const onUpdateCar = /* GraphQL */ `
         id
         username
         email
+        rating
         car {
           id
           type
@@ -232,9 +354,9 @@ export const onUpdateCar = /* GraphQL */ `
         items {
           id
           status
+          createdAt
           userId
           carId
-          createdAt
           type
           originLatitude
           originLongitude
@@ -263,6 +385,7 @@ export const onDeleteCar = /* GraphQL */ `
         id
         username
         email
+        rating
         car {
           id
           type
@@ -284,9 +407,9 @@ export const onDeleteCar = /* GraphQL */ `
         items {
           id
           status
+          createdAt
           userId
           carId
-          createdAt
           type
           originLatitude
           originLongitude
@@ -306,11 +429,13 @@ export const onCreateOrder = /* GraphQL */ `
     onCreateOrder {
       id
       status
+      createdAt
       userId
       user {
         id
         username
         email
+        rating
         car {
           id
           type
@@ -329,7 +454,6 @@ export const onCreateOrder = /* GraphQL */ `
         updatedAt
       }
       carId
-      createdAt
       car {
         id
         type
@@ -342,6 +466,7 @@ export const onCreateOrder = /* GraphQL */ `
           id
           username
           email
+          rating
           createdAt
           updatedAt
         }
@@ -365,11 +490,13 @@ export const onUpdateOrder = /* GraphQL */ `
     onUpdateOrder {
       id
       status
+      createdAt
       userId
       user {
         id
         username
         email
+        rating
         car {
           id
           type
@@ -388,7 +515,6 @@ export const onUpdateOrder = /* GraphQL */ `
         updatedAt
       }
       carId
-      createdAt
       car {
         id
         type
@@ -401,6 +527,7 @@ export const onUpdateOrder = /* GraphQL */ `
           id
           username
           email
+          rating
           createdAt
           updatedAt
         }
@@ -424,11 +551,13 @@ export const onDeleteOrder = /* GraphQL */ `
     onDeleteOrder {
       id
       status
+      createdAt
       userId
       user {
         id
         username
         email
+        rating
         car {
           id
           type
@@ -447,7 +576,6 @@ export const onDeleteOrder = /* GraphQL */ `
         updatedAt
       }
       carId
-      createdAt
       car {
         id
         type
@@ -460,6 +588,7 @@ export const onDeleteOrder = /* GraphQL */ `
           id
           username
           email
+          rating
           createdAt
           updatedAt
         }

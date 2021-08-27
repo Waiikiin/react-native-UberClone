@@ -11,45 +11,6 @@ export const createCar = /* GraphQL */ `
       heading
       isActive
       userId
-      # user {
-      #   id
-      #   username
-      #   email
-      #   car {
-      #     id
-      #     type
-      #     latitude
-      #     longitude
-      #     heading
-      #     isActive
-      #     userId
-      #     createdAt
-      #     updatedAt
-      #   }
-      #   orders {
-      #     nextToken
-      #   }
-      #   createdAt
-      #   updatedAt
-      # }
-      # orders {
-      #   items {
-      #     id
-      #     status
-      #     userId
-      #     carId
-      #     createdAt
-      #     type
-      #     originLatitude
-      #     originLongitude
-      #     destLatitude
-      #     destLongitude
-      #     updatedAt
-      #   }
-      #   nextToken
-      # }
-      # createdAt
-      # updatedAt
     }
   }
 `;
@@ -67,45 +28,34 @@ export const updateCar = /* GraphQL */ `
       heading
       isActive
       userId
-      # user {
-      #   id
-      #   username
-      #   email
-      #   car {
-      #     id
-      #     type
-      #     latitude
-      #     longitude
-      #     heading
-      #     isActive
-      #     userId
-      #     createdAt
-      #     updatedAt
-      #   }
-      #   orders {
-      #     nextToken
-      #   }
-      #   createdAt
-      #   updatedAt
-      # }
-      # orders {
-      #   items {
-      #     id
-      #     status
-      #     userId
-      #     carId
-      #     createdAt
-      #     type
-      #     originLatitude
-      #     originLongitude
-      #     destLatitude
-      #     destLongitude
-      #     updatedAt
-      #   }
-      #   nextToken
-      # }
-      # createdAt
-      # updatedAt
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export const updateOrder = /* GraphQL */ `
+  mutation UpdateOrder(
+    $input: UpdateOrderInput!
+    $condition: ModelOrderConditionInput
+  ) {
+    updateOrder(input: $input, condition: $condition) {
+      id
+      status
+      createdAt
+      userId
+      carId
+      type
+      originLatitude
+      originLongitude
+      destLatitude
+      destLongitude
+      updatedAt
+      user {
+          id
+          username
+          rating
+        }
     }
   }
 `;

@@ -25,7 +25,6 @@ const DestinationSearch = () => {
     };
     
     useEffect(() => {
-        console.warn('useEffect is deprecated');
         if (origin && destination) {
             navigation.navigate("SearchResults", {
                 origin,

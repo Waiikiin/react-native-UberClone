@@ -2,6 +2,7 @@ type User @model {
   id: ID!
   username: String!
   email: String!
+  rating: Float
 
   car: Car @connection(fields: ["id"])
   orders: [Order] @connection(keyName: "byUser", fields: ["id"])
@@ -26,13 +27,12 @@ type Order
   @key(name: "byCar", fields: ["carId", "createdAt"]) {
   id: ID!
   status: String
-  createdAt: String!
+  createdAt: AWSDateTime!
 
   userId: ID!
   user: User @connection(fields: ["userId"])
 
   carId: ID!
-
   car: Car @connection(fields: ["carId"])
   type: String!
 
@@ -40,4 +40,9 @@ type Order
   originLongitude: Float
   destLatitude: Float
   destLongitude: Float
+}
+
+type Subscription {
+  onOrderUpdated(id: ID!): Order @aws_subscribe(mutations: ["updateOrder"])
+  onCarUpdated(id: ID!): Car @aws_subscribe(mutations: ["updateCar"])
 }

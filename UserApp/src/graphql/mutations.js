@@ -10,6 +10,7 @@ export const createUser = /* GraphQL */ `
       id
       username
       email
+      rating
       car {
         id
         type
@@ -22,6 +23,7 @@ export const createUser = /* GraphQL */ `
           id
           username
           email
+          rating
           createdAt
           updatedAt
         }
@@ -35,9 +37,9 @@ export const createUser = /* GraphQL */ `
         items {
           id
           status
+          createdAt
           userId
           carId
-          createdAt
           type
           originLatitude
           originLongitude
@@ -61,6 +63,7 @@ export const updateUser = /* GraphQL */ `
       id
       username
       email
+      rating
       car {
         id
         type
@@ -73,6 +76,7 @@ export const updateUser = /* GraphQL */ `
           id
           username
           email
+          rating
           createdAt
           updatedAt
         }
@@ -86,9 +90,9 @@ export const updateUser = /* GraphQL */ `
         items {
           id
           status
+          createdAt
           userId
           carId
-          createdAt
           type
           originLatitude
           originLongitude
@@ -112,6 +116,7 @@ export const deleteUser = /* GraphQL */ `
       id
       username
       email
+      rating
       car {
         id
         type
@@ -124,6 +129,7 @@ export const deleteUser = /* GraphQL */ `
           id
           username
           email
+          rating
           createdAt
           updatedAt
         }
@@ -137,9 +143,9 @@ export const deleteUser = /* GraphQL */ `
         items {
           id
           status
+          createdAt
           userId
           carId
-          createdAt
           type
           originLatitude
           originLongitude
@@ -171,6 +177,7 @@ export const createCar = /* GraphQL */ `
         id
         username
         email
+        rating
         car {
           id
           type
@@ -192,9 +199,9 @@ export const createCar = /* GraphQL */ `
         items {
           id
           status
+          createdAt
           userId
           carId
-          createdAt
           type
           originLatitude
           originLongitude
@@ -226,6 +233,7 @@ export const updateCar = /* GraphQL */ `
         id
         username
         email
+        rating
         car {
           id
           type
@@ -247,9 +255,9 @@ export const updateCar = /* GraphQL */ `
         items {
           id
           status
+          createdAt
           userId
           carId
-          createdAt
           type
           originLatitude
           originLongitude
@@ -281,6 +289,7 @@ export const deleteCar = /* GraphQL */ `
         id
         username
         email
+        rating
         car {
           id
           type
@@ -302,9 +311,9 @@ export const deleteCar = /* GraphQL */ `
         items {
           id
           status
+          createdAt
           userId
           carId
-          createdAt
           type
           originLatitude
           originLongitude
@@ -327,11 +336,13 @@ export const createOrder = /* GraphQL */ `
     createOrder(input: $input, condition: $condition) {
       id
       status
+      createdAt
       userId
       user {
         id
         username
         email
+        rating
         car {
           id
           type
@@ -350,7 +361,6 @@ export const createOrder = /* GraphQL */ `
         updatedAt
       }
       carId
-      createdAt
       car {
         id
         type
@@ -363,6 +373,7 @@ export const createOrder = /* GraphQL */ `
           id
           username
           email
+          rating
           createdAt
           updatedAt
         }
@@ -389,11 +400,13 @@ export const updateOrder = /* GraphQL */ `
     updateOrder(input: $input, condition: $condition) {
       id
       status
+      createdAt
       userId
       user {
         id
         username
         email
+        rating
         car {
           id
           type
@@ -412,7 +425,6 @@ export const updateOrder = /* GraphQL */ `
         updatedAt
       }
       carId
-      createdAt
       car {
         id
         type
@@ -425,6 +437,7 @@ export const updateOrder = /* GraphQL */ `
           id
           username
           email
+          rating
           createdAt
           updatedAt
         }
@@ -451,11 +464,13 @@ export const deleteOrder = /* GraphQL */ `
     deleteOrder(input: $input, condition: $condition) {
       id
       status
+      createdAt
       userId
       user {
         id
         username
         email
+        rating
         car {
           id
           type
@@ -474,7 +489,6 @@ export const deleteOrder = /* GraphQL */ `
         updatedAt
       }
       carId
-      createdAt
       car {
         id
         type
@@ -487,6 +501,7 @@ export const deleteOrder = /* GraphQL */ `
           id
           username
           email
+          rating
           createdAt
           updatedAt
         }

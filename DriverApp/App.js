@@ -83,6 +83,7 @@ const App: () => Node = () => {
           id: authenticatedUser.attributes.sub,
           type: 'Comfort',
           userId: authenticatedUser.attributes.sub,
+          isActive: false,
       }
 
       const createCarData = await API.graphql(

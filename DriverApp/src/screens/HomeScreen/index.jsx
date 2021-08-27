@@ -17,7 +17,8 @@ import styles from './styles';
 import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify';
 
 import { getCar, listOrders } from '../../graphql/queries';
-import { createCar, updateCar } from '../../graphql/mutations';
+import { createCar, updateCar, updateOrder } from '../../graphql/mutations';
+import { onOrderUpdated } from './subscriptions';
 
 const origin = {latitude: 49.8004, longitude: -97.1676};
 const destination = {latitude: 49.7999, longitude: -97.1676};
@@ -30,38 +31,10 @@ const HomeScreen = () => {
     const [car, setCar] = useState(null);
     const [order, setOrder] = useState(null);
     const [newOrders, setNewOrders] = useState([]);
+    const [distance, setDistance] = useState(null);
+    const [duration, setDuration] = useState(null);
 
     const buttonBottomPos = 150;
-    // const [newOrders, setNewOrders] = useState([{
-    //     id: '1',
-
-    //     type: 'UberX',
-    //     originLatitude: origin.latitude,
-    //     originLongitude: origin.longitude,
-
-    //     destLatitude: destination.latitude,
-    //     destLongitude: destination.longitude,
-
-    //     user: {
-    //         rating: 5.00,
-    //         name: 'John',
-    //     }
-    // },
-    // {
-    //     id: '2',
-
-    //     type: 'Comfort',
-    //     originLatitude: origin2.latitude,
-    //     originLongitude: origin2.longitude,
-
-    //     destLatitude: destination2.latitude,
-    //     destLongitude: destination2.longitude,
-
-    //     user: {
-    //         rating: 4.00,
-    //         name: 'Mary',
-    //     }
-    // }]);
 
     const fetchCar = async () => {
         try {
@@ -81,24 +54,58 @@ const HomeScreen = () => {
     const fetchOrders = async () => {
         try { 
             const listOrdersData = await API.graphql(
-                graphqlOperation(listOrders, 
-                    
-                    // {filter: { status: {eq: 'NEW }}}    
+                graphqlOperation(listOrders,            
+                    {filter: { status: {eq: "New" }}}    
                 )
             )
-            console.log(listOrdersData);
             setNewOrders(listOrdersData.data.listOrders.items);
-            
         } catch (e) {
             console.error(e);
         }
     }
 
     useEffect(() => {
-        console.log("useEffect");
         fetchCar();
         fetchOrders();
     }, [])
+
+    useEffect(() => {
+        if (newOrders[0]){
+            setDistanceAndDuration(
+                {
+                    latitude: newOrders[0].originLatitude,
+                    longitude: newOrders[0].originLongitude,
+                },
+                {
+                    latitude: newOrders[0].destLatitude,
+                    longitude: newOrders[0].destLongitude,
+                }
+            )
+        }
+    }, [newOrders])
+
+    // subscribe to order update
+    useEffect(() => {
+        console.log("enter")
+        console.log(order);
+        if (!order) {
+            return;
+        }
+
+        const subscription = API.graphql(
+        graphqlOperation(onOrderUpdated, {
+            id: order.id,
+        })).subscribe({
+            next: ({ provider, value }) => { 
+                setOrder(value.data.onOrderUpdated);
+            },
+            error: error => console.warn(error)
+        })
+        
+        return () => {
+            subscription.unsubscribe();
+        }
+    }, [order])
 
     const onGoPress = async () => {
         try {
@@ -107,13 +114,11 @@ const HomeScreen = () => {
                 id: authenticatedUser.attributes.sub,
                 isActive: !car.isActive,
             }
-            console.log(car.isActive);
             const updatedCarData = await API.graphql(
                 graphqlOperation(updateCar, {
                     input: input,
                 })
             )
-            console.log(updatedCarData);
             setCar(updatedCarData.data.updateCar);
         } catch (e) {
             console.error(e);
@@ -125,10 +130,25 @@ const HomeScreen = () => {
         setNewOrders(newOrders.shift());
     }
 
-    const onAccept =() => {
-        // new order is at position 1
-        setOrder(newOrders[0]);
-        setNewOrders(newOrders.shift());
+    const onAccept = async () => {
+        try {
+            const input = {
+                id: newOrders[0].id,
+                carId: car.id,
+                status: "Picking up client",
+            }
+            const updateOrderData = await API.graphql(
+                graphqlOperation(updateOrder, {
+                    input
+                })
+            )
+            setOrder(updateOrderData.data.updateOrder);
+
+            // new order is at position 1
+            setNewOrders(newOrders.shift());
+        } catch (e) {
+            console.error(e);
+        }
     }
 
 
@@ -173,8 +193,6 @@ const HomeScreen = () => {
                 pickedUp: order.pickedUp || event.distance < 0.4,
                 isFinished: order.pickedUp && event.distance < 0.4,
             })
-            console.log(event);
-            console.log(order);
         }
     }
 
@@ -190,6 +208,31 @@ const HomeScreen = () => {
             latitude: destination.latitude, 
             longitude: destination.longitude,
         };
+    }
+
+    const setDistanceAndDuration = (origin, destination) => {
+        const originLat = origin.latitude.toFixed(5);
+        const originLong = origin.longitude.toFixed(5);
+        const destLat = destination.latitude.toFixed(5);
+        const destLong = destination.longitude.toFixed(5);
+        const mode = 'driving';
+        const lang = 'en';
+        const alternatives = 'false';
+
+        fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${originLat},${originLong}&destination=${destLat},${destLong}&key=${Config.GOOGLE_MAPS_API_KEY}&mode=${mode}&alternatives=${alternatives}`)
+        .then(response => {
+            
+            const responseJson = response.json()
+            .then( result => {
+                if (result?.status === 'OK'){
+                    setDistance(result.routes[0].legs[0].distance.text);
+                    setDuration(result.routes[0].legs[0].duration.text);
+                    // return result.routes[0].legs[0].distance.text;               
+                }
+            });
+
+        })
+        .catch(e => console.error(e))
     }
 
     const renderBottom = () => {
@@ -351,22 +394,19 @@ const HomeScreen = () => {
                 {renderGo()}
             </Pressable>
 
-            
-                {renderBottom()}
+            {renderBottom()}
                 
 
             { newOrders && newOrders.length > 0 && !order &&
                 <OrderPopup 
                     newOrder={newOrders[0]}
                     onDecline={onDecline}
-                    duration={6}
-                    distance={0.5}
+                    duration={duration}
+                    distance={distance}
                     onAccept={() => onAccept(newOrders[0])}
                 />
             }
-        </View>
-
-        
+        </View>   
     )
 }
 

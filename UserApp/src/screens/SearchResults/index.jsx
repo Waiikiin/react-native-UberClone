@@ -32,30 +32,23 @@ const SearchResults = (props) => {
                 originLongitude: origin.details.geometry.location.lng,
                 destLatitude: destination.details.geometry.location.lat,
                 destLongitude: destination.details.geometry.location.lng,
-
+                status: "New",
                 userId: userInfo.attributes.sub,
                 carId: "1",
             }
 
-            const response = await API.graphql(
+            const createOrderData = await API.graphql(
                 graphqlOperation(
                     createOrder, {
                         input: input
                     }
                 )
             )
-
-            console.log(response);
-            Alert.alert(
-                "On the Way!",
-                "Your order has been submitted",
-                [{
-                    text: "Go home",
-                    onPress: () => {navigation.navigate('Home')}
-                }]
-            )
+            navigation.navigate('OrderScreen', {
+                id: createOrderData.data.createOrder.id
+            })
         } catch (e) {
-            console.log("Error", e);
+            console.error(e);
         }
     }
     

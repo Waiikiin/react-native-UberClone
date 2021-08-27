@@ -27,15 +27,18 @@ const OrderPopup = ({newOrder, duration, distance, onDecline, onAccept}) => {
                     </View>
                     <Text style={styles.uberType}> 
                         <AntDesign name={"star"} size={15}/>  
-                        {' '}
-                        {parseFloat(newOrder?.user?.rating).toFixed(2)} 
+                        {' '}  
+                        {newOrder?.user
+                            ? parseFloat(newOrder?.user?.rating).toFixed(2)
+                            : 4.91
+                        } 
                     </Text>
 
                 </View>
                 
                 <View style={styles.estimationWrapper}>
-                    <Text style={styles.estMin}>{duration} min</Text>
-                    <Text style={styles.estDist}>{distance} mi</Text>
+                    <Text style={styles.estMin}>{duration}</Text>
+                    <Text style={styles.estDist}>{distance} </Text>
                 </View>
                 
                 <View style={styles.lastContainer}> 
