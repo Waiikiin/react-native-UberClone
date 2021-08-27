@@ -3,23 +3,25 @@ import { View, Text } from 'react-native';
 import styles from './styles';
 import AvailableUberRow from '../AvailableUberRow';
 
-import typesData from '../../assets/data/types';
+// import typesData from '../../assets/data/types';
 
-const AvailableUbers = ({ typeState }) => {
-    const [ selectedType, setSelectedType ] = typeState;
+const AvailableUbers = ({ cars, selectedCarState }) => {
+    const [ selectedCar, setSelectedCar ] = selectedCarState;
 
     return (
         <View style={styles.ubersContainer}>
-            {typesData.map(type => (      
+            {cars.map(car => (      
                 <AvailableUberRow 
-                    key={type.id} 
-                    type={type}
-                    isSelected={type.type === selectedType}
-                    onPress={() => setSelectedType(type.type)}
+                    key={car.id} 
+                    car={car}
+                    isSelected={car.id === selectedCar?.id}
+                    selectedCar={selectedCar}
+                    onPress={() => setSelectedCar(car)}
                 /> 
             ))}
         </View>
     )
+    
 }
 
 export default AvailableUbers
