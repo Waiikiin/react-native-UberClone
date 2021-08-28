@@ -12,6 +12,7 @@ exports.handler = async (event, context) => {
                 'email': {S: event.request.userAttributes.email},
                 'createdAt': {S: date.toISOString()},
                 'updatedAt': {S: date.toISOString()},
+                'rating': {S: '0'},
             },
             TableName: process.env.USERTABLE
         }

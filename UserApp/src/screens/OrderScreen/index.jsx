@@ -15,11 +15,9 @@ const OrderScreen = (props) => {
     const [order, setOrder] = useState(null);
 
     const route = useRoute();
-
-    console.log("Order Screen")
-    console.log(route.params?.id);
-
-    // fetch initial order
+    
+    
+    // fetch initial order  
     useEffect(() => {
         const fetchOrder = async() => {
             try {

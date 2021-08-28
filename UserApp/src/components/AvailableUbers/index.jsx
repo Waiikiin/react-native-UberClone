@@ -3,8 +3,6 @@ import { View, Text } from 'react-native';
 import styles from './styles';
 import AvailableUberRow from '../AvailableUberRow';
 
-// import typesData from '../../assets/data/types';
-
 const AvailableUbers = ({ cars, selectedCarState }) => {
     const [ selectedCar, setSelectedCar ] = selectedCarState;
 

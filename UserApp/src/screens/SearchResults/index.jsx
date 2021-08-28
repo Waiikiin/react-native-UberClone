@@ -18,10 +18,6 @@ const SearchResults = (props) => {
     const [ cars, setCars ] = useState([]);
     const selectedCarState = useState(null);
 
-    const [s] = selectedCarState;
-    if (s) {
-        console.log(s);
-    }
     const onSubmit = async () => {
         // take element at position 0
         const [selectedCar] = selectedCarState;
@@ -66,7 +62,8 @@ const SearchResults = (props) => {
 
             try {
                 const listCarsData = await API.graphql(
-                    // add filter cars in the same region
+
+                    // add filter cars in the same region, active, closest
                     graphqlOperation(listCars, {limit})
                 )
                 setCars(listCarsData.data.listCars.items);

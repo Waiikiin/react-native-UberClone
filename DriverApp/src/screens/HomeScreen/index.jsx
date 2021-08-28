@@ -52,13 +52,25 @@ const HomeScreen = () => {
     }
 
     const fetchOrders = async () => {
-        try { 
+        try {
+
             const listOrdersData = await API.graphql(
                 graphqlOperation(listOrders,            
-                    {filter: { status: {eq: "New" }}}    
+                    {filter: {
+                            and: [
+                                    {
+                                        status: {eq: "New" }
+                                    },
+                                    {
+                                        carId: {eq: car.id}
+                                    }
+                                ]
+                        }
+                    }  
                 )
             )
             setNewOrders(listOrdersData.data.listOrders.items);
+            console.log(newOrders)
         } catch (e) {
             console.error(e);
         }
@@ -66,8 +78,12 @@ const HomeScreen = () => {
 
     useEffect(() => {
         fetchCar();
-        fetchOrders();
     }, [])
+
+    // wait until my car is fetched then fetch my orders
+    useEffect(() => {
+        fetchOrders();
+    }, [car])
 
     useEffect(() => {
         if (newOrders[0]){

@@ -17,6 +17,10 @@ const Stack = createNativeStackNavigator();
 //     },
 //   };
 
+/*
+    Inside root, stack navigator wraps drawer navigator 
+    because we want to show the stack header and hide the drawer headers (for now)
+*/
 const RootNavigator = (props) => {
     const scheme = useColorScheme();
     return (

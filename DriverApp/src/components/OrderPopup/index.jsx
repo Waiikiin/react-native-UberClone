@@ -7,6 +7,8 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import styles from './styles';
 
 const OrderPopup = ({newOrder, duration, distance, onDecline, onAccept}) => {
+
+    console.log(newOrder);
     return (
         <View style={styles.root}>
             <View style={styles.buttonsContainer}>
@@ -21,7 +23,7 @@ const OrderPopup = ({newOrder, duration, distance, onDecline, onAccept}) => {
             
             <View style={styles.popupContainer}>
                 <View style={styles.userInfoRow}>
-                    <Text style={styles.uberType}>{newOrder?.type}</Text>
+                    <Text style={styles.uberType}>{newOrder.car.type}</Text>
                     <View style={styles.userBackground}>
                         <FontAwesome name={"user"} size={30} color="white"/>
                     </View>
