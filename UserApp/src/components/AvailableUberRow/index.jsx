@@ -5,19 +5,59 @@ import styles from './styles'
 import Ionicon from "react-native-vector-icons/Ionicons"
 import Feather from "react-native-vector-icons/Feather"
 
-const AvailableUberRow = (props) => {
-    const {type, onPress, isSelected} = props;
-
-    const getImage = () => {
-        if (type.type === 'UberX') {
-            return require('../../assets/images/UberX.png')
+const AvailableUberRow = ( { selectedCar, car, onPress, isSelected }) => {
+    // need to refine
+    // use google direction API
+    const calcaulateDropOff = () => {
+        if (car.type === "UberX") {
+            return '16:35'
+        }
+        if (car.type === "Comfort") {
+            return '16:21'
         }
 
-        if (type.type === 'Comfort') {
+        if (car.type === "UberXL") {
+            return '16:28'
+        }
+    }
+
+    // need to refine
+    const calculatePrice = () => {
+        if (car.type === "UberX") {
+            return '15'
+        }
+        if (car.type === "Comfort") {
+            return '19'
+        }
+
+        if (car.type === "UberXL") {
+            return '23'
+        }
+    }
+
+    const getSeatNum = () => {
+        if (car.type === "UberX") {
+            return '4'
+        }
+        if (car.type === "Comfort") {
+            return '4'
+        }
+
+        if (car.type === "UberXL") {
+            return '6'
+        }
+    }
+
+
+    const getImage = () => {
+        if (car.type === "UberX") {
+            return require('../../assets/images/UberX.png')
+        }
+        if (car.type === "Comfort") {
             return require('../../assets/images/Comfort.png')
         }
 
-        if (type.type === 'UberXL') {
+        if (car.type === "UberXL") {
             return require('../../assets/images/UberXL.png')
         }
     }
@@ -36,23 +76,23 @@ const AvailableUberRow = (props) => {
             <View style={styles.middleContainer}>
                 <View style={styles.middleWrapper}>
                     <Text style={styles.type}>
-                        {type.type} {' '} 
+                        {car.type} {' '} 
                         <Ionicon name={'person'} size={13} />
                     </Text>
 
                     <Text style={styles.seats}>
-                        {' '}3
+                        {' '}{getSeatNum()}
                     </Text>
                 </View>
 
                <Text style={styles.time}>
-                   14:13 dropoff
+                    {calcaulateDropOff()} dropoff
                </Text>
             </View>
 
             <View style={styles.rightContainer}>
                 <Text style={styles.price}>
-                    $27
+                    ${calculatePrice()}
                 </Text>
             </View>
         </Pressable>

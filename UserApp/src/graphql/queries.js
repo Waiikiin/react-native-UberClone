@@ -7,6 +7,7 @@ export const getUser = /* GraphQL */ `
       id
       username
       email
+      rating
       car {
         id
         type
@@ -19,6 +20,7 @@ export const getUser = /* GraphQL */ `
           id
           username
           email
+          rating
           createdAt
           updatedAt
         }
@@ -32,9 +34,9 @@ export const getUser = /* GraphQL */ `
         items {
           id
           status
+          createdAt
           userId
           carId
-          createdAt
           type
           originLatitude
           originLongitude
@@ -60,6 +62,7 @@ export const listUsers = /* GraphQL */ `
         id
         username
         email
+        rating
         car {
           id
           type
@@ -95,6 +98,7 @@ export const getCar = /* GraphQL */ `
         id
         username
         email
+        rating
         car {
           id
           type
@@ -116,9 +120,9 @@ export const getCar = /* GraphQL */ `
         items {
           id
           status
+          createdAt
           userId
           carId
-          createdAt
           type
           originLatitude
           originLongitude
@@ -152,6 +156,7 @@ export const listCars = /* GraphQL */ `
           id
           username
           email
+          rating
           createdAt
           updatedAt
         }
@@ -170,11 +175,13 @@ export const getOrder = /* GraphQL */ `
     getOrder(id: $id) {
       id
       status
+      createdAt
       userId
       user {
         id
         username
         email
+        rating
         car {
           id
           type
@@ -193,7 +200,6 @@ export const getOrder = /* GraphQL */ `
         updatedAt
       }
       carId
-      createdAt
       car {
         id
         type
@@ -206,6 +212,7 @@ export const getOrder = /* GraphQL */ `
           id
           username
           email
+          rating
           createdAt
           updatedAt
         }
@@ -234,16 +241,17 @@ export const listOrders = /* GraphQL */ `
       items {
         id
         status
+        createdAt
         userId
         user {
           id
           username
           email
+          rating
           createdAt
           updatedAt
         }
         carId
-        createdAt
         car {
           id
           type

@@ -1,9 +1,43 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Pressable } from 'react-native';
 import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
-import { Auth } from 'aws-amplify';
+import { API, graphqlOperation, Auth } from 'aws-amplify';
+
+import { getUser } from '../graphql/queries';
 
 const CustomDrawer = (props) => {
+
+    const [username, setUsername] = useState(null);
+    const [userRating, setUserRating] = useState(null);
+
+    useEffect(() => {
+        const fetchUserInfo = async () => {
+            const userInfo = await Auth.currentAuthenticatedUser();
+            try {
+                const getUserData = await API.graphql(
+                    graphqlOperation(
+                        getUser, { id: userInfo.attributes.sub }
+                    )
+                )
+
+                setUsername(userInfo.username);
+                
+                if ( getUserData.data.getUser.rating !== null ) {
+                    setUserRating(getUserData.data.getUser.rating);
+                } else {
+                    setUserRating(0);
+                }
+    
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        fetchUserInfo();
+    }, [])
+
+    
+    
     return (
         <DrawerContentScrollView 
             contentContainerStyle={{
@@ -32,8 +66,8 @@ const CustomDrawer = (props) => {
                         justifyContent: 'space-between',
                         paddingHorizontal: 15,
                     }}>
-                        <Text style={{color: 'white', fontSize: 20}}>Kin Leong</Text>
-                        <Text style={{color: 'lightgrey', fontSize: 12}}>5.00 *</Text>
+                        <Text style={{color: 'white', fontSize: 20}}>{ username ? username : 'Guest'}</Text>
+                        <Text style={{color: 'lightgrey', fontSize: 12}}>{ userRating ? userRating : '0' } *</Text>
                     </View>
                 </View>
                 {/* Messages */}

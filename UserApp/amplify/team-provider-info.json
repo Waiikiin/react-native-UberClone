@@ -15,7 +15,7 @@
       "function": {
         "reactnativeuberclonec96f8de4c96f8de4PostConfirmation": {
           "deploymentBucketName": "amplify-reactnativeuberclone-dev-00358-deployment",
-          "s3Key": "amplify-builds/reactnativeuberclonec96f8de4c96f8de4PostConfirmation-7a5239686c78784e6439-build.zip"
+          "s3Key": "amplify-builds/reactnativeuberclonec96f8de4c96f8de4PostConfirmation-322b434566505462434e-build.zip"
         },
         "reactnativeuberclonec96f8de4c96f8de4PreSignup": {
           "deploymentBucketName": "amplify-reactnativeuberclone-dev-00358-deployment",

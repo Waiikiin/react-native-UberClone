@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Image, View } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import Config from "react-native-config";
@@ -6,7 +6,7 @@ import Config from "react-native-config";
 import { API, graphqlOperation } from 'aws-amplify';
 import { listCars } from '../../graphql/queries';
 
-const HomeMap = ({ origin, destination }) => {
+const OrderMap = ({ car }) => {
     const _latitudeDelta = 0.0022;
     const _longitudeDelta =  0.0221;
     const GOOGLE_MAPS_APIKEY = Config.GOOGLE_MAPS_API_KEY;
@@ -15,28 +15,6 @@ const HomeMap = ({ origin, destination }) => {
         latitude:  28.450627,
         longitude: -16.263045,
     };
-
-    const [cars, setCars] = useState([]);
-    const [location, setLocation] = useState(null);
-
-    useEffect(() => {
-        const fetchCars = async () => {
-            try{
-                const listCarsData = await API.graphql(
-                    graphqlOperation(
-                        listCars, {
-
-                        }
-                    )
-                )
-                setCars(listCarsData.data.listCars.items);
-            } catch(e) {
-                console.error(e);
-            }
-        }
-        
-        fetchCars();
-    }, [])
 
     const getImage = (type) => {
         if (type === 'UberX') {
@@ -67,8 +45,8 @@ const HomeMap = ({ origin, destination }) => {
                     latitudeDelta: _latitudeDelta,
                     longitudeDelta: _longitudeDelta,
                 }}
-            >
-                {cars && cars.map((car) => (
+            >   
+                { car && (
                     <Marker
                         key={car.id}
                         coordinate={{ latitude : car.latitude , longitude : car.longitude }}
@@ -84,11 +62,11 @@ const HomeMap = ({ origin, destination }) => {
                             }}
                             source={getImage(car.type)} 
                         />
-                    </Marker>
-                ))}
+                    </Marker> 
+                )}
             </MapView>
         </View>
     )
 }
 
-export default HomeMap
+export default OrderMap
