@@ -2,13 +2,14 @@
 <br />
 <p align="center">
   <a href="https://github.com/Waiikiin/react-native-UberClone">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="images/logo.png" alt="Logo" width="100" height="100">
+    <img src="images/logo_driver.png" alt="Logo" width="100" height="100">
   </a>
 
   <h3 align="center">project_title</h3>
 
   <p align="center">
-    A clone of the popular Uber App implemented in react native
+    Clones of the popular Uber App implemented in react native
     <br />
     </strong></a>
     <br />
@@ -53,7 +54,7 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-This is a clone of the popular Uber App implemented in react native. It contains the core features that the real Uber has.
+These are clones of the popular Uber App and Uber Driver App implemented in react native. It contains the core features that the real Uber app has.
 
 I started this project to learn more about react-native and its paradigm. Features like navigation, search autocomplete, google maps, etc. are implemented in the app to make it look more like the real Uber App. To make the app more interactive, I implemented the backend using AWS Amplify to replace most dummy data in the app. 
 
