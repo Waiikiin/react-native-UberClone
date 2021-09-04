@@ -46,6 +46,8 @@ const HomeScreen = () => {
                 })
             )
             setCar(getCarData.data.getCar);
+            console.log(car.id);
+            console.log(authenticatedUser);
         } catch (e) {
             console.error(e);
         }
@@ -53,7 +55,6 @@ const HomeScreen = () => {
 
     const fetchOrders = async () => {
         try {
-
             const listOrdersData = await API.graphql(
                 graphqlOperation(listOrders,            
                     {filter: {
@@ -70,7 +71,6 @@ const HomeScreen = () => {
                 )
             )
             setNewOrders(listOrdersData.data.listOrders.items);
-            console.log(newOrders)
         } catch (e) {
             console.error(e);
         }
@@ -82,6 +82,9 @@ const HomeScreen = () => {
 
     // wait until my car is fetched then fetch my orders
     useEffect(() => {
+        if (!car) {
+            return;
+        }
         fetchOrders();
     }, [car])
 
@@ -102,8 +105,6 @@ const HomeScreen = () => {
 
     // subscribe to order update
     useEffect(() => {
-        console.log("enter")
-        console.log(order);
         if (!order) {
             return;
         }
