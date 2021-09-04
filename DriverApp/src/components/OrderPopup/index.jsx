@@ -7,8 +7,6 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import styles from './styles';
 
 const OrderPopup = ({newOrder, duration, distance, onDecline, onAccept}) => {
-
-    console.log(newOrder);
     return (
         <View style={styles.root}>
             <View style={styles.buttonsContainer}>

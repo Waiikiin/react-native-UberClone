@@ -27,7 +27,6 @@ const OrderScreen = (props) => {
                     })
                 )
                 setOrder(getOrderData.data.getOrder);
-                console.log(getOrderData);
             } catch (e) {
                 console.error(e);
             }
@@ -37,7 +36,6 @@ const OrderScreen = (props) => {
 
     // subscribe to order update
     useEffect(() => {
-        console.log(order);
         const subscription = API.graphql(
             graphqlOperation(onOrderUpdated, {
                 id: route.params.id,
@@ -54,7 +52,6 @@ const OrderScreen = (props) => {
     // subscribe to car update
     // need to depend on order to get the carId
     useEffect(() => {
-        console.log(car);
 
         if (!order?.carId || order?.carId === '1') {
             return;
@@ -87,7 +84,6 @@ const OrderScreen = (props) => {
                     })
                 )
                 setCar(getCarData.data.getCar);
-                console.log(getCarData);
             } catch (e) {
                 console.error(e);
             }
