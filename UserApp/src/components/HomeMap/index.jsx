@@ -71,7 +71,7 @@ const HomeMap = ({ origin, destination }) => {
                 {cars && cars.map((car) => (
                     <Marker
                         key={car.id}
-                        coordinate={{ latitude : car.latitude , longitude : car.longitude }}
+                        coordinate={{ latitude : car.latitude ? car.latitude : 28.450637 , longitude : car.longitude ? car.longitude : -16.263025 }}
                     >
                         <Image 
                             style={{
@@ -79,7 +79,7 @@ const HomeMap = ({ origin, destination }) => {
                                 height: 60, 
                                 resizeMode: 'contain',
                                 transform: [{
-                                    rotate: `${car.heading}deg`
+                                    rotate: `${car.heading ? car.heading : 90}deg`
                                 },]
                             }}
                             source={getImage(car.type)} 

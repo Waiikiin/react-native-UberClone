@@ -6,19 +6,19 @@
     <img src="images/logo_driver.png" alt="Logo" width="100" height="100">
   </a>
 
-  <h3 align="center">project_title</h3>
+  <h3 align="center">Uber Clone</h3>
 
   <p align="center">
     Clones of the popular Uber App implemented in react native
     <br />
-    </strong></a>
+    `</strong></a>
     <br />
     <br />
-    <a href="https://github.com/github_username/repo_name">View Demo</a>
+    <a href="https://github.com/Waiikiin/react-native-UberClone">View Demo</a>
     ·
-    <a href="https://github.com/github_username/repo_name/issues">Report Bug</a>
+    <a href="https://github.com/Waiikiin/react-native-UberClone">Report Bug</a>
     ·
-    <a href="https://github.com/github_username/repo_name/issues">Request Feature</a>
+    <a href="https://github.com/Waiikiin/react-native-UberClone">Request Feature</a>
   </p>
 </p>
 
@@ -52,7 +52,12 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+<a align="center">
+  <img src="images/UserApp.gif" width="25%" height="500">
+  <img src="images/DriverApp.gif" width="25%" height="500">
+</a>
+
+
 
 These are clones of the popular Uber App and Uber Driver App implemented in react native. It contains the core features that the real Uber app has.
 
@@ -103,10 +108,10 @@ You need a google API key, if you don't have one, please visit [this website](ht
     ```sh
     npm install
     ```
-    Or if you have ios
+    if you have ios
 
     ```sh
-    cd ios && pod install
+    cd ios && pod install && cd ..
     ```
 4. Open .env_template and put your API key in there
 5. Rename the file .env_template to .env
@@ -118,13 +123,6 @@ You need a google API key, if you don't have one, please visit [this website](ht
     ```sh
     npm run ios or yarn ios
     ```
-
-
-
-<!-- USAGE EXAMPLES -->
-## Usage
-
-
 
 <!-- CONTACT -->
 ## Contact
@@ -141,4 +139,5 @@ LinkedIn - [https://www.linkedin.com/in/wai-kin-leong-8a4a51170](https://www.lin
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
-[product-screenshot]: images/.gif
+[UserApp-screenshot]: images/UserApp.gif
+[DriverApp-screenshot]: images/DriverApp.gif
