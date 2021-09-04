@@ -19,13 +19,13 @@ const HomeMap = ({ origin, destination }) => {
     const [cars, setCars] = useState([]);
     const [location, setLocation] = useState(null);
 
+
     useEffect(() => {
         const fetchCars = async () => {
             try{
                 const listCarsData = await API.graphql(
                     graphqlOperation(
                         listCars, {
-
                         }
                     )
                 )
@@ -71,7 +71,8 @@ const HomeMap = ({ origin, destination }) => {
                 {cars && cars.map((car) => (
                     <Marker
                         key={car.id}
-                        coordinate={{ latitude : car.latitude , longitude : car.longitude }}
+                        coordinate={{ latitude : car.latitude ? car.latitude : 28.450638,
+                                        longitude : car.longitude ? car.longitude : -16.263056}}
                     >
                         <Image 
                             style={{
