@@ -53,8 +53,8 @@
 ## About The Project
 
 <a align="center">
-  <img src="images/UserApp.gif" width="25%" height="500">
-  <img src="images/DriverApp.gif" width="25%" height="500">
+  <img src="images/UserApp.gif">
+  <img src="images/DriverApp.gif">
 </a>
 
 
